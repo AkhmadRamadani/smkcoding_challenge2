@@ -1,0 +1,17 @@
+GENERAL
+$this->post ('/post', \General::class . ":Post");
+$this->post ('/deletePost', \General::class . ":DeletePost");
+$this->post ('/deleteKomen', \General::class . ":DeleteKomentar");
+$this->post ('/postKomen', \General::class . ":PostKomentar");
+$this->post ('/getPostDataLatest', \General::class . ":GetAllPostLatest");
+$this->post ('/getPostDataPopular', \General::class . ":GetAllPostPopular");
+$this->post ('/getPostDataById', \General::class . ":GetPostDataById");
+$this->post ('/getKomentarById', \General::class . ":GetKomentarbyId");
+$this->post ('/search', \General::class . ":Search");
+
+AUTH
+$this->get ('', \Auth::class . ":index");
+$this->get ('/verifyUser/{api_key}', \Auth::class . ":verifyUser");
+$this->post ('/register', \Auth::class . ":RegisterUser");
+$this->get ('/getUsers', \Auth::class . ":getAllUser") -> add(Filter::class);
+$this->post('/login', \Auth::class . ":LoginUser");
