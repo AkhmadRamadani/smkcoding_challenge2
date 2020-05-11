@@ -1,5 +1,6 @@
 package com.example.smkcoding.data
 
+import android.util.Log
 import com.example.smkcoding.R
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -24,7 +25,7 @@ inline fun <reified T>apiRequests(okHttpClient: OkHttpClient):T{
     val gson = GsonBuilder().create()
 
     val retrofit = Retrofit.Builder()
-        .baseUrl("http://192.168.43.247/joke/v1/")
+        .baseUrl("http://192.168.0.21/joke/v1/")
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
