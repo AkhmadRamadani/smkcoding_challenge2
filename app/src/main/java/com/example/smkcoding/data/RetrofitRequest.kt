@@ -2,6 +2,7 @@ package com.example.smkcoding.data
 
 import android.util.Log
 import com.example.smkcoding.R
+import com.example.smkcoding.util.BASE_URL_API
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -25,7 +26,7 @@ inline fun <reified T>apiRequests(okHttpClient: OkHttpClient):T{
     val gson = GsonBuilder().create()
 
     val retrofit = Retrofit.Builder()
-        .baseUrl("http://192.168.0.21/joke/v1/")
+        .baseUrl(BASE_URL_API)
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
