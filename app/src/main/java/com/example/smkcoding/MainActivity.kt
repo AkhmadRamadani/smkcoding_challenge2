@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val adapter = ViewPagerAdapter(this)
-        viewpager.setAdapter(adapter);
+        viewpager.adapter = adapter
         TabLayoutMediator(tablayout, viewpager,
             TabLayoutMediator.TabConfigurationStrategy {tab, position ->
                 tab.text = judulMenu[position]

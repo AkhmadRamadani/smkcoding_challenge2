@@ -56,3 +56,28 @@ data class DataLogin(
     @SerializedName("verified")
     val verified: String
 )
+
+data class RegisterUserResponse(
+    @SerializedName("status")
+    val status: Boolean,
+    @SerializedName("message")
+    val message: String
+)
+
+data class SearchResult(
+    @SerializedName("joke")
+    val joke: List<Data>,
+    @SerializedName("user")
+    val user: List<UserSearchResult>
+)
+
+data class UserSearchResult(
+    @SerializedName("email")
+    val email: String,
+    @SerializedName("id_user")
+    val idUser: String,
+    @SerializedName("nama")
+    val nama: String,
+    @SerializedName("totalPost")
+    val totalPost: String
+)
