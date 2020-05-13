@@ -1,14 +1,14 @@
 package com.example.smkcoding.data
 
 import com.example.smkcoding.*
+import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface DataServices {
+
     @FormUrlEncoded
     @POST("general/getPostDataLatest")
     fun getLatestPosts(@Field("id_user") id_user: String ):Call<GetPopularData>
@@ -32,4 +32,10 @@ interface DataServices {
     @POST("general/search")
     fun search(@Field("keyword") keyword: String,
                @Field("id_user") id_user: String): Call<SearchResult>
+
+    @Multipart
+    @POST("general/post")
+    fun post(@Part("img") img:MultipartBody.Part,
+             @Field("text") text: String,
+             @Field("id_user") id_user: String): Call<PostResponse>
 }

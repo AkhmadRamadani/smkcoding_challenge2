@@ -17,7 +17,6 @@ import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Callback
 import retrofit2.Response
 
-
 class LoginActivity : AppCompatActivity() {
     private var emailNew : String = ""
     private var passwordNew : String = ""
@@ -25,12 +24,15 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        val sharedPreference: SharedPreference = SharedPreference(this)
+
         btnLogin.setOnClickListener(){
             emailNew = email.text.toString()
             passwordNew = password.text.toString()
             progressBar.visibility = ProgressBar.VISIBLE
             if (validateLogin(emailNew,passwordNew)){
-                loginActivity(emailNew, passwordNew)
+                loginActivity(emailNew, passwordNew, sharedPreference)
             }else{
                 progressBar.visibility = ProgressBar.INVISIBLE
             }
@@ -43,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    fun loginActivity(emailparams: String, passwordparams: String){
+    fun loginActivity(emailparams: String, passwordparams: String, sharedPreference: SharedPreference){
         val httpClient = httpClient()
         val apiRequest = apiRequests<DataServices>(httpClient)
         val call = apiRequest.loginUser(emailparams,passwordparams)
@@ -62,12 +64,24 @@ class LoginActivity : AppCompatActivity() {
                 when{
                     response.isSuccessful -> {
                         when{
-                            response.body()?.status == true -> {
+                            response.body()?.status == true && response.body()?.data!!.verified == "1" -> {
+                                sharedPreference.saveString(sharedPreference.apiKey, response.body()?.data!!.apiKey)
+                                sharedPreference.saveString(sharedPreference.nama, response.body()?.data!!.nama)
+                                sharedPreference.saveString(sharedPreference.email, response.body()?.data!!.email)
+                                sharedPreference.saveString(sharedPreference.idUSer, response.body()?.data!!.idUser)
+                                sharedPreference.saveString(sharedPreference.password, response.body()?.data!!.password)
+                                sharedPreference.saveString(sharedPreference.verified, response.body()?.data!!.verified)
+                                sharedPreference.saveBoolean(sharedPreference.login, true)
+
                                 val intent = Intent(this@LoginActivity,MainActivity::class.java)
                                 startActivity(intent)
                                 progressBar.visibility = ProgressBar.INVISIBLE
 
                                 finish()
+                            }
+                            response.body()?.data!!.verified == "0" -> {
+                                progressBar.visibility = ProgressBar.INVISIBLE
+                                tampilToast(this@LoginActivity,"Lihat Email dan verifikasi akun anda")
                             }
                             else -> {
                                 progressBar.visibility = ProgressBar.INVISIBLE

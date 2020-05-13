@@ -1,5 +1,7 @@
 package com.example.smkcoding
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -23,7 +25,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     var spinnertypeofcontent: Spinner? = null
     val types = arrayOf("Recent Posts", "Popular Posts")
@@ -44,30 +46,41 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, @Nullable savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getPost()
-//        setDataSpinner()
+        val sharedPreference:SharedPreference=SharedPreference(context!!)
+
+        getPost(sharedPreference,types[0].toString())
+        setDataSpinner()
     }
 
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        tampilToast(context!!, "nothingSelected")
 
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        val sharedPreference:SharedPreference=SharedPreference(context!!)
+        getPost(sharedPreference,types[position].toString())
+    }
 
     private fun setDataSpinner(){
-//
-//        val adapter = ArrayAdapter.createFromResource(activity?.applicationContext, android.R.layout.simple_list_item_1, types)
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//
-////          val adapter = ArrayAdapter(activity?.applicationContext, R.layout.sim, types)
+
+        ArrayAdapter.createFromResource(context!!,R.array.typeOfContentArray,android.R.layout.simple_spinner_item)
+            .also { adapter ->
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                typeOfContent.adapter = adapter
+            }
 
     }
 
-    private fun getPost() {
+    private fun getPost(sharedPreference: SharedPreference, tipekonten: String) {
         showLoading(context!!, swipeRefreshLayout)
-
+        val idUser = sharedPreference.getValueString(sharedPreference.idUSer)
         val httpClient = httpClient()
         val apiRequest = apiRequests<DataServices>(httpClient)
-        var spinnerInput = typeOfContent.selectedItem.toString()
+        var spinnerInput = tipekonten
 
         Log.d("SpinnerValue", spinnerInput)
-        val call = apiRequest.getLatestPosts("15")
+        val call = apiRequest.getLatestPosts(idUser.toString())
         call.enqueue(object: Callback<GetPopularData>{
             override fun onFailure(call: Call<GetPopularData>, t: Throwable) {
                 dismissLoading(swipeRefreshLayout)

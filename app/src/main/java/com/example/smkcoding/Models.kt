@@ -81,3 +81,10 @@ data class UserSearchResult(
     @SerializedName("totalPost")
     val totalPost: String
 )
+
+data class PostResponse(
+    @SerializedName("status")
+    val status: String,
+    @SerializedName("data")
+    val data: Boolean
+)

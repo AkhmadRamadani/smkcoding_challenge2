@@ -40,16 +40,19 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, @Nullable savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val sharedPreference:SharedPreference=SharedPreference(context!!)
+
         btnSearch.setOnClickListener {
             keywordText = keywordSearch.text.toString()
-            getPost(keywordText)
+            getPost(keywordText, sharedPreference)
         }
     }
 
-    private fun getPost(keyword: String) {
+    private fun getPost(keyword: String, sharedPreference: SharedPreference) {
         val httpClient = httpClient()
         val apiRequest = apiRequests<DataServices>(httpClient)
-        val call = apiRequest.search(keyword,"15")
+        val idUser = sharedPreference.getValueString(sharedPreference.idUSer)
+        val call = apiRequest.search(keyword,idUser.toString())
         call.enqueue(object: Callback<SearchResult> {
             override fun onFailure(call: Call<SearchResult>, t: Throwable) {
                 Log.d("FragmentError", t.toString())
@@ -98,6 +101,7 @@ class SearchFragment : Fragment() {
         val layoutManager = FlexboxLayoutManager(context)
 //        layoutManager.flexDirection = FlexDirection.COLUMN
 //        layoutManager.justifyContent = JustifyContent.FLEX_END
+//        val layoutManager = LinearLayoutManager(context)
         userList.layoutManager = layoutManager
         userList.adapter = UserListsAdapter(context!!, data){
             val newdata = it
