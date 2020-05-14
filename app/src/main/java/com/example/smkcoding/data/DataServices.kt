@@ -2,9 +2,8 @@ package com.example.smkcoding.data
 
 import com.example.smkcoding.*
 import okhttp3.MultipartBody
-import okhttp3.ResponseBody
+import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.http.*
 
 interface DataServices {
@@ -33,9 +32,20 @@ interface DataServices {
     fun search(@Field("keyword") keyword: String,
                @Field("id_user") id_user: String): Call<SearchResult>
 
+    @FormUrlEncoded
+    @POST("general/postLike")
+    fun postLike(@Field("id_post") id_post: String,
+               @Field("id_user") id_user: String): Call<RegisterUserResponse>
+
+    @FormUrlEncoded
+    @POST("general/deleteLike")
+    fun deleteLike(@Field("id_post") id_post: String,
+                 @Field("id_user") id_user: String): Call<RegisterUserResponse>
+
+
     @Multipart
     @POST("general/post")
-    fun post(@Part("img") img:MultipartBody.Part,
-             @Field("text") text: String,
-             @Field("id_user") id_user: String): Call<PostResponse>
+    fun post(@Part img: MultipartBody.Part? = null,
+             @Part("text") text: RequestBody,
+             @Part("id_user") id_user: RequestBody): Call<PostResponse>
 }

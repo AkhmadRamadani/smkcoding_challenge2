@@ -36,62 +36,45 @@
                 </TextView>
                 <LinearLayout
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="start"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <LinearLayout
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:background="#38000BFF"
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:src="@drawable/ic_thumb_up_black_24dp">
+                    <ImageView
+                        android:id="@+id/jempol"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_thumb_up_black_24dp">
 
-                        </ImageView>
-                        <TextView
-                            android:layout_marginLeft="10dp"
-                            android:layout_width="50dp"
-                            android:textSize="20dp"
-                            android:textStyle="bold"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/jumlahLike"
-                            android:text="15">
+                    </ImageView>
+                    <TextView
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="50dp"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/jumlahLike"
+                        android:text="15">
 
-                        </TextView>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:background="#48FFE600"
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:src="@drawable/ic_comment_black_24dp">
+                    </TextView>
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_comment_black_24dp">
 
-                        </ImageView>
-                        <TextView
-                            android:layout_marginLeft="10dp"
-                            android:layout_width="50dp"
-                            android:textSize="20dp"
-                            android:textStyle="bold"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/jumlahKomen"
-                            android:text="15">
+                    </ImageView>
+                    <TextView
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="50dp"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/jumlahKomen"
+                        android:text="15">
 
-                        </TextView>
-
-                    </LinearLayout>
-
+                    </TextView>
                 </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -2,6 +2,7 @@ package com.example.smkcoding
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -50,6 +51,10 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
         getPost(sharedPreference,types[0].toString())
         setDataSpinner()
+        floating_action_button.setOnClickListener {
+            val intent = Intent(context!!, PostActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -74,12 +79,13 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun getPost(sharedPreference: SharedPreference, tipekonten: String) {
         showLoading(context!!, swipeRefreshLayout)
+        var spinnerInput = tipekonten
+        Log.d("SpinnerValue", spinnerInput)
         val idUser = sharedPreference.getValueString(sharedPreference.idUSer)
         val httpClient = httpClient()
         val apiRequest = apiRequests<DataServices>(httpClient)
-        var spinnerInput = tipekonten
 
-        Log.d("SpinnerValue", spinnerInput)
+
         val call = apiRequest.getLatestPosts(idUser.toString())
         call.enqueue(object: Callback<GetPopularData>{
             override fun onFailure(call: Call<GetPopularData>, t: Throwable) {
