@@ -1,5 +1,6 @@
 package com.example.smkcoding
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -93,7 +94,11 @@ class SearchFragment : Fragment() {
         postList.layoutManager = LinearLayoutManager(context)
         postList.adapter = PostListsAdapter(context!!, data){
             val newdata = it
-            tampilToast(context!!, newdata.nama )
+            val intent = Intent(context!!, DetailPost::class.java)
+            val bundle = Bundle()
+            bundle.putString("idPost", newdata.idPost)
+            intent.putExtras(bundle)
+            startActivity(intent)
         }
     }
 

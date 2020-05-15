@@ -42,6 +42,16 @@ interface DataServices {
     fun deleteLike(@Field("id_post") id_post: String,
                  @Field("id_user") id_user: String): Call<RegisterUserResponse>
 
+    @FormUrlEncoded
+    @POST("general/getPostDataById")
+    fun getDataPostById(@Field("id_post") id_post: String,
+                   @Field("id_user") id_user: String): Call<dataPostById>
+
+    @FormUrlEncoded
+    @POST("general/postKomen")
+    fun postKomentar(@Field("id_post") id_post: String,
+                        @Field("id_user") id_user: String,
+                     @Field("komentar") komentar: String): Call<PostResponse>
 
     @Multipart
     @POST("general/post")

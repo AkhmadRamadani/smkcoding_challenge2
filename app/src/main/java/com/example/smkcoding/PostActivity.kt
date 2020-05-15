@@ -139,12 +139,13 @@ class PostActivity : AppCompatActivity() {
             override fun onResponse(call: Call<PostResponse>, response: Response<PostResponse>) {
                 tampilToast(this@PostActivity, "Sukses Upload")
                 Log.d("suksesuplaod", response.toString())
+                imgUpload.setImageResource(0)
+                imgUpload.setImageURI(Uri.EMPTY)
+                val intent = Intent(this@PostActivity, MainActivity::class.java)
+                startActivity(intent)
             }
 
         })
     }
 
-    fun upload(contentUri: Uri){
-        val service: File
-    }
 }

@@ -8,11 +8,27 @@
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/image"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
         </ImageView>
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/txtwithoutimage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minHeight="120dp">
+            <TextView
+                android:id="@+id/text2"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:text="wkwkwk"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
         <LinearLayout
             android:padding="10dp"
             android:layout_width="match_parent"

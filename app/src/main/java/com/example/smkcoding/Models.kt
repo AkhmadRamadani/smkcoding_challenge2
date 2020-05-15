@@ -88,3 +88,27 @@ data class PostResponse(
     @SerializedName("data")
     val data: Boolean
 )
+
+data class dataPostById(
+    @SerializedName("dataPost")
+    val dataPost: Data,
+    @SerializedName("komentar")
+    val komentar: List<Komentar>,
+    @SerializedName("status")
+    val status: String
+)
+
+data class Komentar(
+    @SerializedName("email")
+    val email: String,
+    @SerializedName("id_komentar")
+    val idKomentar: String,
+    @SerializedName("id_post")
+    val idPost: String,
+    @SerializedName("id_user")
+    val idUser: String,
+    @SerializedName("komentar")
+    val komentar: String,
+    @SerializedName("nama")
+    val nama: String
+)

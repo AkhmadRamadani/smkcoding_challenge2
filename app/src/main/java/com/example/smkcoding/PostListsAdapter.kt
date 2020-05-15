@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 import com.example.smkcoding.data.DataServices
 import com.example.smkcoding.data.apiRequests
 import com.example.smkcoding.data.httpClient
@@ -43,23 +44,30 @@ class PostListsAdapter(private val context: Context, private val items: List<Dat
         var liked: String = "0"
         var newJL: String = "0"
         fun bindItem(item: Data, listener: (Data) -> Unit) {
-
+            image.setImageResource(0)
+            image.setImageDrawable(null)
+            image.setImageURI(null)
             text.text = item.text
             nama.text = item.nama
             newJL = item.totalLike
             jumlahKomen.text = item.totalKomen
             jumlahLike.text = newJL
-            Log.d("Img length", item.img.length.toString())
+//            Log.d("Img length", image.drawable)
             if (item.img.length != 0) {
                 image.visibility = ImageView.VISIBLE
                 Glide.with(context)
                     .load(BASE_URL_API+"storage/imagePost/" + item.img)
-                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(image)
             }
-            if(item.text.length == 0){
-                text.visibility = TextView.GONE
-            }
+//            if (item.img.length == 0){
+//                txtwithoutimage.visibility = LinearLayout.VISIBLE
+//                text2.text = item.text
+//                text.visibility = TextView.GONE
+//            }
+//            if(item.text.length == 0){
+//                text.visibility = TextView.GONE
+//            }
             liked = item.isLiked.toString()
             if (liked == "1"){
                 jempol!!.setImageResource(R.drawable.ic_thumb_up_blue_24dp)
@@ -96,6 +104,7 @@ class PostListsAdapter(private val context: Context, private val items: List<Dat
                     jempol!!.setImageResource(R.drawable.ic_thumb_up_blue_24dp)
                     liked = "1"
                     newJL = (Integer.parseInt(newJL) + 1).toString()
+                    jumlahLike.text = newJL
                     Log.d("nmbhlike", newJL)
                 }
 
@@ -121,6 +130,8 @@ class PostListsAdapter(private val context: Context, private val items: List<Dat
                     liked = "0"
 
                     newJL = (Integer.parseInt(newJL) - 1).toString()
+                    jumlahLike.text = newJL
+
                     Log.d("ngrnglike", newJL)
                 }
 

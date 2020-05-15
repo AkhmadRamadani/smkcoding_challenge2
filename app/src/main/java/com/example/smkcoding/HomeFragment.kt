@@ -96,7 +96,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
             override fun onResponse(call: Call<GetPopularData>, response: Response<GetPopularData>) {
                 dismissLoading(swipeRefreshLayout)
-                Log.d("FragmentSuccess", response.toString())
+                Log.d("FragmentSuccess", response.body()?.toString())
                 when {
                     response.isSuccessful ->
                         when{
@@ -182,7 +182,11 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
         postList.layoutManager = LinearLayoutManager(context)
         postList.adapter = PostListsAdapter(context!!, data){
             val newdata = it
-            tampilToast(context!!, newdata.nama )
+            val intent = Intent(context!!, DetailPost::class.java)
+            val bundle = Bundle()
+            bundle.putString("idPost", newdata.idPost)
+            intent.putExtras(bundle)
+            startActivity(intent)
         }
     }
 

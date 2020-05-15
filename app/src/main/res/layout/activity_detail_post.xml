@@ -3,89 +3,155 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".DetailPost">
 
-    <ImageView
-        android:id="@+id/imageTV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </ImageView>
-    <TextView
-        android:id="@+id/textTV"
-        android:text="Asdowojadnsakjfnkasnfiufiaj"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </TextView>
     <LinearLayout
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_weight="1"
-            android:gravity="center"
-            android:background="#38000BFF"
-            android:orientation="horizontal"
+        android:background="#fff"
+        android:gravity="center"
+        android:layout_marginBottom="5dp"
+        android:layout_height="50dp">
+        <TextView
+            android:id="@+id/poster"
+            android:textStyle="bold"
+            android:textColor="#222"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:maxLines="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_thumb_up_black_24dp">
-
-            </ImageView>
-            <TextView
-                android:layout_marginLeft="10dp"
-                android:layout_width="50dp"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:layout_height="wrap_content"
-                android:id="@+id/jumlahLike"
-                android:text="15">
-
-            </TextView>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_weight="1"
-            android:gravity="center"
-            android:background="#48FFE600"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_comment_black_24dp">
-
-            </ImageView>
-            <TextView
-                android:layout_marginLeft="10dp"
-                android:layout_width="50dp"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:layout_height="wrap_content"
-                android:id="@+id/jumlahKomen"
-                android:text="15">
-
-            </TextView>
-
-        </LinearLayout>
-
+            android:layout_height="wrap_content"
+            android:text="Rama's Post"></TextView>
     </LinearLayout>
-    <EditText
-        android:id="@+id/komentarText"
-        android:layout_marginTop="10dp"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxHeight="140dp"
-        android:text="Komentar anda...."
-        android:scrollbars="vertical"
-        android:minHeight="50dp">
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/imageTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    </EditText>
+            </ImageView>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/txtwithoutimage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="120dp">
+                <TextView
+                    android:id="@+id/text2"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:layout_width="match_parent"
+                    android:text="wkwkwk"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <TextView
+                android:layout_marginVertical="5dp"
+                android:id="@+id/text"
+                android:textSize="18sp"
+                android:layout_width="match_parent"
+                android:text="wkwkwk"
+                android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:background="#38000BFF"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_thumb_up_black_24dp">
+
+                    </ImageView>
+                    <TextView
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="50dp"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/jumlahLikeTv"
+                        android:text="15">
+
+                    </TextView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:background="#48FFE600"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_comment_black_24dp">
+
+                    </ImageView>
+                    <TextView
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="50dp"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/jumlahKomenTv"
+                        android:text="15">
+
+                    </TextView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/komentarText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxHeight="140dp"
+                    android:layout_weight="1"
+                    android:layout_marginRight="2dp"
+                    android:hint="Komentar anda...."
+                    android:scrollbars="vertical"
+                    android:minHeight="50dp">
+
+                </EditText>
+                <ImageView
+                    android:src="@drawable/ic_send_black_24dp"
+                    android:id="@+id/btnSend"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"></ImageView>
+            </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvKomen"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+
+    </ScrollView>
+
 </LinearLayout>
