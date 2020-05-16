@@ -1,6 +1,8 @@
 package com.example.smkcoding
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,6 +20,7 @@ import com.example.smkcoding.data.DataServices
 import com.example.smkcoding.data.apiRequests
 import com.example.smkcoding.data.httpClient
 import com.example.smkcoding.util.BASE_URL_API
+import com.example.smkcoding.util.tampilToast
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.card_post.*
 import retrofit2.Call
@@ -41,18 +44,16 @@ class PostListsAdapter(private val context: Context, private val items: List<Dat
 
     class ViewHolder(val context: Context, override val containerView: View):
         RecyclerView.ViewHolder(containerView), LayoutContainer{
-        var liked: String = "0"
-        var newJL: String = "0"
+
         fun bindItem(item: Data, listener: (Data) -> Unit) {
             image.setImageResource(0)
             image.setImageDrawable(null)
             image.setImageURI(null)
+
             text.text = item.text
             nama.text = item.nama
-            newJL = item.totalLike
             jumlahKomen.text = item.totalKomen
-            jumlahLike.text = newJL
-//            Log.d("Img length", image.drawable)
+            jumlahLike.text = item.totalLike
             if (item.img.length != 0) {
                 image.visibility = ImageView.VISIBLE
                 Glide.with(context)
@@ -60,82 +61,29 @@ class PostListsAdapter(private val context: Context, private val items: List<Dat
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(image)
             }
-//            if (item.img.length == 0){
-//                txtwithoutimage.visibility = LinearLayout.VISIBLE
-//                text2.text = item.text
-//                text.visibility = TextView.GONE
-//            }
-//            if(item.text.length == 0){
-//                text.visibility = TextView.GONE
-//            }
-            liked = item.isLiked.toString()
-            if (liked == "1"){
-                jempol!!.setImageResource(R.drawable.ic_thumb_up_blue_24dp)
-                jempol.setOnClickListener {
-                    deleteLike(item, listener)
-                }
-            }
-            else if (liked == "0"){
-                jempol!!.setImageResource(R.drawable.ic_thumb_up_black_24dp)
-                jempol.setOnClickListener {
-                    addLike(item, listener)
-                }
-            }
 
 
             containerView.setOnClickListener { listener(item) }
         }
-        fun addLike(item: Data, listener: (Data) -> Unit){
-            val sharedPreference:SharedPreference=SharedPreference(context!!)
-            val idUser = sharedPreference.getValueString(sharedPreference.idUSer)
+
+        private fun actionDeletePost(idPost: String) {
             val httpClient = httpClient()
             val apiRequest = apiRequests<DataServices>(httpClient)
 
-            val call = apiRequest.postLike(item.idPost.toString(), idUser.toString())
-            call.enqueue(object : Callback<RegisterUserResponse>{
+            val call = apiRequest.deletePost(idPost)
+            call.enqueue(object: Callback<RegisterUserResponse> {
                 override fun onFailure(call: Call<RegisterUserResponse>, t: Throwable) {
-
+                    tampilToast(context!!, "Gagal hapus post")
                 }
 
                 override fun onResponse(
                     call: Call<RegisterUserResponse>,
                     response: Response<RegisterUserResponse>
                 ) {
-                    jempol!!.setImageResource(R.drawable.ic_thumb_up_blue_24dp)
-                    liked = "1"
-                    newJL = (Integer.parseInt(newJL) + 1).toString()
-                    jumlahLike.text = newJL
-                    Log.d("nmbhlike", newJL)
+                    tampilToast(context!!, "Sukses hapus post")
                 }
-
             })
         }
-        fun deleteLike(item: Data, listener: (Data) -> Unit){
-            val sharedPreference:SharedPreference=SharedPreference(context!!)
-            val idUser = sharedPreference.getValueString(sharedPreference.idUSer)
-            val httpClient = httpClient()
-            val apiRequest = apiRequests<DataServices>(httpClient)
 
-            val call = apiRequest.deleteLike(item.idPost.toString(), idUser.toString())
-            call.enqueue(object : Callback<RegisterUserResponse>{
-                override fun onFailure(call: Call<RegisterUserResponse>, t: Throwable) {
-
-                }
-
-                override fun onResponse(
-                    call: Call<RegisterUserResponse>,
-                    response: Response<RegisterUserResponse>
-                ) {
-                    jempol!!.setImageResource(R.drawable.ic_thumb_up_black_24dp)
-                    liked = "0"
-
-                    newJL = (Integer.parseInt(newJL) - 1).toString()
-                    jumlahLike.text = newJL
-
-                    Log.d("ngrnglike", newJL)
-                }
-
-            })
-        }
     }
 }

@@ -72,7 +72,7 @@
                         android:textStyle="bold"
                         android:layout_height="wrap_content"
                         android:id="@+id/jumlahLike"
-                        android:text="15">
+                        android:text="0">
 
                     </TextView>
                     <ImageView
@@ -88,7 +88,7 @@
                         android:textStyle="bold"
                         android:layout_height="wrap_content"
                         android:id="@+id/jumlahKomen"
-                        android:text="15">
+                        android:text="0">
 
                     </TextView>
                 </LinearLayout>

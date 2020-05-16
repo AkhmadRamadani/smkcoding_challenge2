@@ -113,67 +113,6 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
             }
 
         })
-//        when {
-//            spinnerInput.equals("Recent Posts", ignoreCase = true)->{
-//                val call = apiRequest.getLatestPosts("15")
-//                call.enqueue(object: Callback<GetPopularData>{
-//                    override fun onFailure(call: Call<GetPopularData>, t: Throwable) {
-//                        dismissLoading(swipeRefreshLayout)
-//                        Log.d("FragmentError", t.toString())
-//                        tampilToast(context!!, "Gagallllllll")
-//                    }
-//
-//                    override fun onResponse(call: Call<GetPopularData>, response: Response<GetPopularData>) {
-//                        dismissLoading(swipeRefreshLayout)
-//                        Log.d("FragmentSuccess", response.toString())
-//                        when {
-//                            response.isSuccessful ->
-//                                when{
-//                                    response.body()?.data?.size != 0 ->
-//                                        showPostList(response.body()!!.data)
-//                                    else -> {
-//                                        tampilToast(context!!, "Berhasil")
-//                                    }
-//                                }
-//                            else -> {
-//                                tampilToast(context!!, "Gagal")
-//                            }
-//                        }
-//                    }
-//
-//                })
-//            }
-//            else ->{
-//                val call = apiRequest.getPopularPosts("15")
-//                call.enqueue(object: Callback<GetPopularData>{
-//                    override fun onFailure(call: Call<GetPopularData>, t: Throwable) {
-//                        dismissLoading(swipeRefreshLayout)
-//                        Log.d("FragmentError", t.toString())
-//                        tampilToast(context!!, "Gagallllllll")
-//                    }
-//
-//                    override fun onResponse(call: Call<GetPopularData>, response: Response<GetPopularData>) {
-//                        dismissLoading(swipeRefreshLayout)
-//                        Log.d("FragmentSuccess", response.toString())
-//                        when {
-//                            response.isSuccessful ->
-//                                when{
-//                                    response.body()?.data?.size != 0 ->
-//                                        showPostList(response.body()!!.data)
-//                                    else -> {
-//                                        tampilToast(context!!, "Berhasil")
-//                                    }
-//                                }
-//                            else -> {
-//                                tampilToast(context!!, "Gagal")
-//                            }
-//                        }
-//                    }
-//
-//                })
-//            }
-//
-//        }
 
 
     }

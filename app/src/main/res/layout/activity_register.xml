@@ -106,14 +106,6 @@
             </TextView>
             </LinearLayout>
 
-            <TextView
-                android:layout_below="@id/butttonn"
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:text="*Tolong gunakan email asli, karena harus verifikasi"
-                android:layout_height="wrap_content">
-
-            </TextView>
             <ProgressBar
                 android:id="@+id/progressBar"
                 android:layout_centerInParent="true"

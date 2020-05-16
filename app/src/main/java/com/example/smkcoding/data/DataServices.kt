@@ -53,6 +53,15 @@ interface DataServices {
                         @Field("id_user") id_user: String,
                      @Field("komentar") komentar: String): Call<PostResponse>
 
+
+    @FormUrlEncoded
+    @POST("general/deleteKomen")
+    fun deleteKomentar(@Field("id_komentar") id_komentar: String): Call<RegisterUserResponse>
+
+    @FormUrlEncoded
+    @POST("general/deletePost")
+    fun deletePost(@Field("id_post") id_post: String): Call<RegisterUserResponse>
+
     @Multipart
     @POST("general/post")
     fun post(@Part img: MultipartBody.Part? = null,

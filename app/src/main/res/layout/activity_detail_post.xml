@@ -22,7 +22,7 @@
             android:maxLines="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Rama's Post"></TextView>
+            android:text="Someone's Post"></TextView>
     </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
@@ -59,7 +59,7 @@
                 android:id="@+id/text"
                 android:textSize="18sp"
                 android:layout_width="match_parent"
-                android:text="wkwkwk"
+                android:text="Lorem ipsum dolor..."
                 android:layout_height="wrap_content"/>
             <LinearLayout
                 android:layout_marginTop="10dp"
@@ -68,9 +68,10 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/giveLike"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:background="#38000BFF"
+                    android:background="#48BABABA"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -87,14 +88,14 @@
                         android:textStyle="bold"
                         android:layout_height="wrap_content"
                         android:id="@+id/jumlahLikeTv"
-                        android:text="15">
+                        android:text="0">
 
                     </TextView>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:background="#48FFE600"
+                    android:background="#48BABABA"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -111,7 +112,7 @@
                         android:textStyle="bold"
                         android:layout_height="wrap_content"
                         android:id="@+id/jumlahKomenTv"
-                        android:text="15">
+                        android:text="0">
 
                     </TextView>
 
