@@ -142,6 +142,7 @@ class PostActivity : AppCompatActivity() {
                 imgUpload.setImageResource(0)
                 imgUpload.setImageURI(Uri.EMPTY)
                 val intent = Intent(this@PostActivity, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
                 finish()
             }

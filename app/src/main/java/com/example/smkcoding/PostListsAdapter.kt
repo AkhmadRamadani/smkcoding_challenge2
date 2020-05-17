@@ -42,6 +42,10 @@ class PostListsAdapter(private val context: Context, private val items: List<Dat
 
     }
 
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
     class ViewHolder(val context: Context, override val containerView: View):
         RecyclerView.ViewHolder(containerView), LayoutContainer{
 
@@ -62,7 +66,16 @@ class PostListsAdapter(private val context: Context, private val items: List<Dat
                     .into(image)
             }
 
+            if (item.isLiked == "1"){
+                jumlahLike.setTextColor(Color.BLUE)
+                jempol.setImageResource(R.drawable.ic_thumb_up_blue_24dp)
+            }
 
+            if (item.img.length == 0){
+                txtwithoutimage.visibility = LinearLayout.VISIBLE
+                text2.text = item.text
+                text.visibility = TextView.GONE
+            }
             containerView.setOnClickListener { listener(item) }
         }
 

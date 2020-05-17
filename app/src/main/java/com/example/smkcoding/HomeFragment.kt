@@ -26,9 +26,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
+class HomeFragment : Fragment() {
 
-    var spinnertypeofcontent: Spinner? = null
     val types = arrayOf("Recent Posts", "Popular Posts")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,34 +49,14 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
         val sharedPreference:SharedPreference=SharedPreference(context!!)
 
         getPost(sharedPreference,types[0].toString())
-        setDataSpinner()
+
         floating_action_button.setOnClickListener {
             val intent = Intent(context!!, PostActivity::class.java)
             startActivity(intent)
         }
     }
 
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-        tampilToast(context!!, "nothingSelected")
-
-    }
-
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        val sharedPreference:SharedPreference=SharedPreference(context!!)
-        getPost(sharedPreference,types[position].toString())
-    }
-
-    private fun setDataSpinner(){
-
-        ArrayAdapter.createFromResource(context!!,R.array.typeOfContentArray,android.R.layout.simple_spinner_item)
-            .also { adapter ->
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                typeOfContent.adapter = adapter
-            }
-
-    }
-
-    private fun getPost(sharedPreference: SharedPreference, tipekonten: String) {
+    fun getPost(sharedPreference: SharedPreference, tipekonten: String) {
         showLoading(context!!, swipeRefreshLayout)
         var spinnerInput = tipekonten
         Log.d("SpinnerValue", spinnerInput)
@@ -100,10 +79,10 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 when {
                     response.isSuccessful ->
                         when{
-                            response.body()?.data?.size != 0 ->
+                            response.body()?.data != null ->
                                 showPostList(response.body()!!.data)
                             else -> {
-                                tampilToast(context!!, "Berhasil")
+                                tampilToast(context!!, "DataKosong")
                             }
                         }
                     else -> {
@@ -125,6 +104,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
             val bundle = Bundle()
             bundle.putString("idPost", newdata.idPost)
             intent.putExtras(bundle)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
         }
     }

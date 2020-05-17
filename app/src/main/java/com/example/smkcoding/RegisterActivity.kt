@@ -63,7 +63,7 @@ class RegisterActivity : AppCompatActivity() {
                     response.isSuccessful->{
                         when{
                             response.body()?.status == true->{
-                                tampilToast(this@RegisterActivity, "Periksa Email anda dan verifikasi")
+                                tampilToast(this@RegisterActivity, "Pendaftaran berhasil, silahkan login")
                                 email.setText("")
                                 password.setText("")
                                 nama.setText("")

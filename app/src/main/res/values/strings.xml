@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SMKCoding</string>
+    <string name="app_name">Jokeee</string>
     <string name="BASE_URL">http://192.168.0.21/joke/v1/</string>
     <string-array name="typeOfContentArray">
         <item>Recent Posts</item>

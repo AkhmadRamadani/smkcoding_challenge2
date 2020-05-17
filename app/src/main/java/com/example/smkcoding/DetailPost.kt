@@ -1,8 +1,13 @@
 package com.example.smkcoding
 
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -98,6 +103,34 @@ class DetailPost : AppCompatActivity() {
                                     text2.text = dataPost?.text
                                     text.visibility = TextView.GONE
                                 }
+                                if (dataPost?.isLiked == "1"){
+                                    jempolImg.setImageResource(R.drawable.ic_thumb_up_blue_24dp)
+                                    jumlahLikeTv.setTextColor(Color.BLUE)
+
+                                    jempolImg.setOnClickListener {
+                                        likeController(true,dataPost?.idPost)
+                                    }
+                                }
+                                else if (dataPost?.isLiked == "0"){
+                                    jempolImg.setOnClickListener {
+                                        likeController(false,dataPost?.idPost)
+                                    }
+                                }
+                                if (dataPost?.idUser == idUser){
+                                    deleteImg.visibility = ImageView.VISIBLE
+                                    deleteImg.setOnClickListener {
+                                        val builder = AlertDialog.Builder(this@DetailPost)
+                                        builder.setMessage("Hapus Post ini?")
+                                            .setPositiveButton("Ok",
+                                                DialogInterface.OnClickListener { dialog, which ->  actionDeletePost(dataPost?.idPost)}
+                                            )
+                                            .setNegativeButton("Batal",
+                                                DialogInterface.OnClickListener { dialog, which ->  }
+                                            )
+                                            .show()
+                                        builder.create()
+                                    }
+                                }
                                 showPostList(response.body()!!.komentar)
                             }
                             else -> {
@@ -110,6 +143,75 @@ class DetailPost : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun actionDeletePost(idPost: String) {
+        val httpClient = httpClient()
+        val apiRequest = apiRequests<DataServices>(httpClient)
+
+        val call = apiRequest.deletePost(idPost)
+        call.enqueue(object: Callback<RegisterUserResponse> {
+            override fun onFailure(call: Call<RegisterUserResponse>, t: Throwable) {
+                tampilToast(this@DetailPost, "Gagal hapus post")
+            }
+
+            override fun onResponse(
+                call: Call<RegisterUserResponse>,
+                response: Response<RegisterUserResponse>
+            ) {
+                tampilToast(this@DetailPost, "Sukses hapus post")
+                val intent = Intent(this@DetailPost, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
+                finish()
+            }
+        })
+    }
+
+    private fun likeController(isLiked: Boolean, idPost: String){
+        val httpClient = httpClient()
+        val apiRequest = apiRequests<DataServices>(httpClient)
+        val sharedPreference:SharedPreference=SharedPreference(this)
+        val idUser = sharedPreference.getValueString(sharedPreference.idUSer)
+
+        var call = apiRequest.postLike(idPost,idUser.toString())
+        if (isLiked == true){
+            call = apiRequest.deleteLike(idPost,idUser.toString())
+            call.enqueue(object : Callback<RegisterUserResponse> {
+                override fun onFailure(call: Call<RegisterUserResponse>, t: Throwable) {
+                    Log.d("likefailure", t.toString())
+                }
+
+                override fun onResponse(
+                    call: Call<RegisterUserResponse>,
+                    response: Response<RegisterUserResponse>
+                ) {
+                    Log.d("likesukses", "ok")
+                }
+            })
+            jumlahLikeTv.setTextColor(Color.BLACK)
+
+            jempolImg.setImageResource(R.drawable.ic_thumb_up_black_24dp)
+            return getData()
+        }
+        else if(isLiked == false) {
+            call.enqueue(object : Callback<RegisterUserResponse> {
+                override fun onFailure(call: Call<RegisterUserResponse>, t: Throwable) {
+                    Log.d("likefailure", t.toString())
+                }
+
+                override fun onResponse(
+                    call: Call<RegisterUserResponse>,
+                    response: Response<RegisterUserResponse>
+                ) {
+                    Log.d("likesukses", "ok")
+                }
+            })
+            jumlahLikeTv.setTextColor(Color.BLUE)
+
+            jempolImg.setImageResource(R.drawable.ic_thumb_up_blue_24dp)
+            return getData()
+        }
     }
 
     private fun showPostList(komentar: List<Komentar>) {
