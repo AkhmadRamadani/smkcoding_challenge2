@@ -1,5 +1,6 @@
 package com.example.smkcoding
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.telecom.Call
@@ -8,19 +9,21 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import com.example.smkcoding.data.DataServices
 import com.example.smkcoding.data.apiRequests
 import com.example.smkcoding.data.httpClient
 import com.example.smkcoding.util.tampilToast
+import com.firebase.ui.auth.AuthUI
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Callback
 import retrofit2.Response
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private var emailNew : String = ""
     private var passwordNew : String = ""
-
+    private var auth: FirebaseAuth? = null
+    private val RC_SIGN_IN = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -43,6 +46,33 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+        lgnWithGoogle.setOnClickListener(this)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == RC_SIGN_IN){
+            if (resultCode == Activity.RESULT_OK){
+                progressBar.visibility = ProgressBar.GONE
+                tampilToast(this,"Login Berhasil")
+                intent = Intent(this,MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            }else{
+            }
+        }
+    }
+    override fun onClick(v: View?) {
+        // Statement program untuk login/masuk
+        startActivityForResult(
+            AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(listOf(AuthUI.IdpConfig.GoogleBuilder().build()))
+                .setIsSmartLockEnabled(false)
+                .build(),
+            RC_SIGN_IN)
+
+        progressBar.visibility = ProgressBar.VISIBLE
     }
 
     fun loginActivity(emailparams: String, passwordparams: String, sharedPreference: SharedPreference){
