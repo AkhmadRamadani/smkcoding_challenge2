@@ -53,17 +53,14 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == RC_SIGN_IN){
             if (resultCode == Activity.RESULT_OK){
-                progressBar.visibility = ProgressBar.GONE
-                tampilToast(this,"Login Berhasil")
-                intent = Intent(this,MainActivity::class.java)
-                startActivity(intent)
-                finish()
+                val user = FirebaseAuth.getInstance().currentUser
+                loginWithGoogle(user!!.email.toString() ,user!!.uid.toString(), user!!.displayName.toString())
+
             }else{
             }
         }
     }
     override fun onClick(v: View?) {
-        // Statement program untuk login/masuk
         startActivityForResult(
             AuthUI.getInstance()
                 .createSignInIntentBuilder()
@@ -73,6 +70,53 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             RC_SIGN_IN)
 
         progressBar.visibility = ProgressBar.VISIBLE
+    }
+
+    fun loginWithGoogle(emailNew: String, passwordNew: String, namaNew: String){
+        val httpClient = httpClient()
+        val apiRequest = apiRequests<DataServices>(httpClient)
+        val call = apiRequest.registerUser(emailNew,passwordNew,namaNew);
+
+        val sharedPreference: SharedPreference = SharedPreference(this)
+
+        call.enqueue(object : Callback<RegisterUserResponse>{
+            override fun onFailure(call: retrofit2.Call<RegisterUserResponse>, t: Throwable) {
+                tampilToast(this@LoginActivity, "Periksa Jaringan")
+                progressBar.visibility = ProgressBar.INVISIBLE
+
+                Log.d("gagal regg", t.toString())
+            }
+
+            override fun onResponse(
+                call: retrofit2.Call<RegisterUserResponse>,
+                response: Response<RegisterUserResponse>
+            ) {
+                when{
+                    response.isSuccessful->{
+                        when{
+                            response.body()?.status == false->{
+                                progressBar.visibility = ProgressBar.INVISIBLE
+                                loginActivity(emailNew,passwordNew,sharedPreference)
+//                                tampilToast(this@LoginActivity, response.body()?.message.toString())
+
+                            }
+                            else -> {
+                                progressBar.visibility = ProgressBar.INVISIBLE
+                                loginActivity(emailNew,passwordNew,sharedPreference)
+
+//                                tampilToast(this@LoginActivity, response.body()?.message.toString())
+                            }
+                        }
+                    }
+                    else -> {
+                        progressBar.visibility = ProgressBar.INVISIBLE
+
+                        tampilToast(this@LoginActivity, "Register Gagal")
+                    }
+                }
+            }
+
+        })
     }
 
     fun loginActivity(emailparams: String, passwordparams: String, sharedPreference: SharedPreference){
