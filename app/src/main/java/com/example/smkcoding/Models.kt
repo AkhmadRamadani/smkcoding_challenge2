@@ -1,11 +1,12 @@
 package com.example.smkcoding
 
 
+import com.example.smkcoding.entity.HomeDataModel
 import com.google.gson.annotations.SerializedName
 
 data class GetPopularData(
     @SerializedName("data")
-    val `data`: List<Data>,
+    val `data`: MutableList<HomeDataModel>,
     @SerializedName("status")
     val status: String
 )
@@ -17,6 +18,28 @@ data class Data(
     val idPost: String,
     @SerializedName("id_user")
     val idUser: String,
+    @SerializedName("img")
+    val img: String,
+    @SerializedName("isLiked")
+    val isLiked: String,
+    @SerializedName("nama")
+    val nama: String,
+    @SerializedName("text")
+    val text: String,
+    @SerializedName("totalKomen")
+    val totalKomen: String,
+    @SerializedName("totalLike")
+    val totalLike: String
+)
+
+
+data class DataModel(
+    @SerializedName("email")
+    val email: String,
+    @SerializedName("id_post")
+    val id_post: String,
+    @SerializedName("id_user")
+    val id_user: String,
     @SerializedName("img")
     val img: String,
     @SerializedName("isLiked")

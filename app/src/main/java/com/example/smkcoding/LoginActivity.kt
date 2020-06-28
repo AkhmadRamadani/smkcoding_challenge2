@@ -157,7 +157,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                                 progressBar.visibility = ProgressBar.INVISIBLE
                                 tampilToast(this@LoginActivity,"Lihat Email dan verifikasi akun anda")
                             }
-                            else -> {
+                            else  -> {
                                 progressBar.visibility = ProgressBar.INVISIBLE
 
                                 tampilToast(this@LoginActivity, "Gagal Login")

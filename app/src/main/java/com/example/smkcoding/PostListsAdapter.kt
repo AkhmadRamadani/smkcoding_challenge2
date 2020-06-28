@@ -1,10 +1,7 @@
 package com.example.smkcoding
 
-import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,11 +11,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.Target
 import com.example.smkcoding.data.DataServices
 import com.example.smkcoding.data.apiRequests
 import com.example.smkcoding.data.httpClient
+import com.example.smkcoding.entity.HomeDataModel
 import com.example.smkcoding.util.BASE_URL_API
 import com.example.smkcoding.util.tampilToast
 import kotlinx.android.extensions.LayoutContainer
@@ -27,9 +23,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class PostListsAdapter(private val context: Context, private val items: List<Data>
-                       , private val listener: (Data)-> Unit): RecyclerView.Adapter<PostListsAdapter.ViewHolder>(){
-
+class PostListsAdapter(
+    private val context: Context,
+    public var items: ArrayList<HomeDataModel>,
+    private val listener: PostDataListener): RecyclerView.Adapter<PostListsAdapter.ViewHolder>(){
+//
+//    private val inflater: LayoutInflater = LayoutInflater.from(context)
+//    private var postData = emptyList<Data>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
             = ViewHolder(context, LayoutInflater.from(context).inflate(R.layout.card_post,parent,false))
 
@@ -49,7 +49,10 @@ class PostListsAdapter(private val context: Context, private val items: List<Dat
     class ViewHolder(val context: Context, override val containerView: View):
         RecyclerView.ViewHolder(containerView), LayoutContainer{
 
-        fun bindItem(item: Data, listener: (Data) -> Unit) {
+        fun bindItem(
+            item: HomeDataModel,
+            listener: PostDataListener
+        ) {
             image.setImageResource(0)
             image.setImageDrawable(null)
             image.setImageURI(null)
@@ -76,8 +79,13 @@ class PostListsAdapter(private val context: Context, private val items: List<Dat
                 text2.text = item.text
                 text.visibility = TextView.GONE
             }
-            containerView.setOnClickListener { listener(item) }
+            containerView.setOnClickListener { listener.onClick(item) }
         }
+
+//        internal fun setData(post: List<Data>, item: Data) {
+//            text.text = post.toString()
+//            notifyDataSetChanged()
+//        }
 
         private fun actionDeletePost(idPost: String) {
             val httpClient = httpClient()
@@ -98,5 +106,10 @@ class PostListsAdapter(private val context: Context, private val items: List<Dat
             })
         }
 
+    }
+
+    interface PostDataListener {
+        fun onClick(item: HomeDataModel)
+//        fun init()
     }
 }

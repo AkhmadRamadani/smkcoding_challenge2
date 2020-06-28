@@ -1,6 +1,5 @@
 package com.example.smkcoding
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,12 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.smkcoding.data.DataServices
 import com.example.smkcoding.data.apiRequests
 import com.example.smkcoding.data.httpClient
-import com.example.smkcoding.util.dismissLoading
-import com.example.smkcoding.util.showLoading
 import com.example.smkcoding.util.tampilToast
-import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
-import com.google.android.flexbox.JustifyContent
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.fragment_search.*
 import retrofit2.Call
@@ -92,14 +87,7 @@ class SearchFragment : Fragment() {
 
     private fun showPostList(data: List<Data>){
         postList.layoutManager = LinearLayoutManager(context)
-        postList.adapter = PostListsAdapter(context!!, data){
-            val newdata = it
-            val intent = Intent(context!!, DetailPost::class.java)
-            val bundle = Bundle()
-            bundle.putString("idPost", newdata.idPost)
-            intent.putExtras(bundle)
-            startActivity(intent)
-        }
+        postList.adapter = PostListsAdapter(context!!, data)
     }
 
     private fun showUserList(data: List<UserSearchResult>){
